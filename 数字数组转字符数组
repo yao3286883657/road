@@ -1,0 +1,54 @@
+基础案例：
+int a[105];
+char b[105];
+int x,count=0;
+scanf("%d",&x);
+for(int i=0;i<105li++){            //填充数字数组
+  scanf("%d",&a[i]);
+  if（a[i]==0)break;
+  count++;                         //计数，写在最后可以不计入最后一次输入的退出数字
+}
+for(int i=0;i<count;i++){
+  int sum=a[i]+x;
+  sprintf(b,"%d%c%d=%d",a[i],+,x);  //关键：将这串算式转变为字符串存储在字符数组中
+  printf("%d",(int)strlen(b));      //输出这次字符串长度
+  printf("%s",b);                   //输出字符串
+  }
+
+
+题目示例洛谷p1957:
+#include <stdio.h>
+#include <string.h>
+int main(void){
+  int n;
+  char b[105];                        
+  scanf("%d",&n);
+  char t='a';                        //定符号，方便与下次输入的符号进行比较
+  int x,y;
+  for(int i=0;i<n;i++){
+    char first[32];                  
+    scanf("%31s",first);             //检测如果是字母，则更新定符号，否则将输入的数赋予x
+    if(first[0]>='a' &&first[0]<='c'){
+      t=first[0];
+      scanf("%d %d",&x.&y);
+    }else{
+      sscanf(first,"%d",&x);
+      scanf("%d",&y);
+    }
+    char sign;
+    int sum;                          //分类
+    if(t=='a'){
+      sign='+';
+      sum=x+y;
+    }else if(t=='b'){
+      sign='-';
+      sum=x-y;
+    }else if(t=='c'){
+      sign='*';
+      sum=x*y;
+    }
+    sprintf(b,"%d%c%d=%d",x,sign,y,sum);    //算式转字符串
+    printf("%s\n%d\n",b,(int)strlen(b));    //输出字符串与长度
+  }
+  return 0;
+}

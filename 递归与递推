@@ -1,0 +1,51 @@
+主要去理清思路：
+            递归：先看到最小的情况，再得到结果，相当于看到结局后再去写过程；
+            递推：走一步看一步，从小到大
+  e：https://www.luogu.com.cn/problem/P5461
+递推：
+  int all[1050][1050]={0};
+  int main(void){
+    all[0][0]=1;                      //确定最小矩阵，逐渐增大
+    int n,len=1;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++,len*=2){
+      for(int j=0;j<len;j++){
+        for(int k=0;k<len;k++){
+          all[j+len][k]=all[j][k+len]=all[j][k];    //去复制子矩阵，让左下与右上的与左上的相同
+        }
+      }
+    }
+    for(int i=len-1;i>=0;i--){
+      for(int j=len-1;j>=0;j--){
+        printf("%d ",all[i][j]);
+      }
+      printf("\n");
+    }
+    return 0;
+  }
+  递归：
+    int all[1050][1050]={0};
+    void add(int x,int y,int n){
+        if(n==1){
+          all[x][y+1]=all[x+1][y]=all[x+1][y+1]=1;    //当矩阵缩小到最小时返回
+          return ;
+        }
+        int midx,midy;
+        midx=x+(1<<(n-1));                            //去得到中间值来缩小矩阵大小
+        midy=y+(1<<(n-1));
+        add(midx,midy,n-1);                           //递归去得到右上，右下，左下的最小矩阵
+        add(midx,y,n-1);
+        add(x,midy,n-1);
+    }
+int main(void){
+  int n;
+  scanf("%d",&n);
+  add(0,0,n);
+  for(int i=0;i<1<<n;i++){
+    for(int j=0;j<1<<n;j++){
+      printf("%d ",all[i][j]);
+    }
+    printf("\n");
+  }
+  return 0;
+}

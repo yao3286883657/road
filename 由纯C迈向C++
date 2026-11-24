@@ -1,0 +1,70 @@
+由于我想参加CSP，所以开始向c++迈进，今天主要是排序上的改变：
+  由纯C写的成绩排序，虽然繁琐但也还可以跑通
+  #include <stdio.h>
+struct stu {
+	long long id;
+	int ch, ma, en,sum;
+	
+}a[1010];
+void swap(struct stu a[], int n) {
+	for (int i = 0;i < n - 1;i++) {
+		for (int j = 0;j < n - 1 - i;j++) {
+			if (a[j].sum == a[j + 1].sum) {
+				if (a[j].ch == a[j + 1].ch) {
+					if (a[j].id > a[j + 1].id) {
+						struct stu t = a[j];
+						a[j] = a[j + 1];
+						a[j + 1] = t;
+					}
+				}
+				else if(a[j].ch<a[j+1].ch){
+					struct stu t = a[j];
+					a[j] = a[j + 1];
+					a[j + 1] = t;
+				}
+			}
+			else if (a[j].sum < a[j + 1].sum) {
+				struct stu t = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = t;
+			}
+		}
+	}
+}
+int main(void) {
+	int n;
+	scanf("%d", &n);
+	for (int i = 0;i < n;i++) {
+		scanf("%lld %d %d %d", &a[i].id, &a[i].ch, &a[i].ma, &a[i].en);
+		a[i].sum = a[i].ch + a[i].ma + a[i].en;
+	}
+	swap(a, n);
+	for (int i = 0;i < n;i++) {
+		printf("%lld %d %d %d %d\n", a[i].id, a[i].ch, a[i].ma, a[i].en, a[i].sum);
+	}
+	return 0;
+}
+c++版：
+  #include <bits/stdc++>
+  using namespace std;
+  struct stu{long long id;int ch,ma,en,sum;};
+  stu a[1005];
+  bool cmp(const stu& a,const stu& b){
+      if(a.sum!=b.sum)return a.sum>b.sum;
+      if(a.ch!=b.ch)return a.ch>b.ch;
+      returna.id<b.id; 
+  }
+int main(){
+  int n;
+  scanf("%d",&n);
+  for(int i=0;i<n;i++){
+    scanf("%lld %d %d %d", &a[i].id, &a[i].ch, &a[i].ma, &a[i].en);
+    		a[i].sum = a[i].ch + a[i].ma + a[i].en;
+	}
+	sort(a, a + n, cmp);
+	for (int i = 0;i < n;i++) {
+		printf("%lld %d %d %d %d\n", a[i].id, a[i].ch, a[i].ma, a[i].en, a[i].sum);
+	}
+	return 0;
+}
+对于很多东西我理解还是很不清除，这只作为我转变的开始

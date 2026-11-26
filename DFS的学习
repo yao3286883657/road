@@ -1,0 +1,45 @@
+首先是全排列的模板:
+int n,a[15];
+bool vis[15];
+void(int dep){
+  if(dep==n+1)
+        for(int i=1;i<=n;i++)cout<<a[i];
+  return ;
+  for(int i=dep;i<=n;i++){
+        vis[i]=1;
+        a[dep]=i;
+        dfs(dep+1);
+        vis[i]=0;
+  }
+}
+int main(void){
+  cin>>n;
+  for(int i=1;i<=n;i++){
+      cin>>a[i];
+  }
+  dfs(1);
+  return0；
+}
+组合的改变:
+int n,k,ans=0,a[25];
+bool isPrime(int sum){
+    if(sum<2)return false;
+    if(sum%2==0)return false;
+    for(int i=3;i*i<=sum;i++)
+          if(sum%i==0)return false;
+  return true;
+}
+void dfs(int dep,int start,int sum){
+    int sum=0;
+    if(dep==k)
+        if(isPrime(sum))ans++;
+    return ;
+    for(int i=start;i<=n;i++)dfs(dep+1,i+1,sum+=a[i]);
+}
+int main(void){
+  cin>>n>>k;
+  for(int i=1;i<=n;i++)cin>>a[i];
+  dfs(0,1,0)；
+  cout<<ans<<endl;
+  return 0;
+}
